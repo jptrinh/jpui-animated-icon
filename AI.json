@@ -2,7 +2,15 @@
     "metadata": {
         "name": "jpui-animated-icon",
         "description": "An animated line icon (Lucide style, animations ported from lucide-animated). It plays by itself when the button, link or menu item around it is clicked or hovered, follows a bound boolean, or plays from workflow actions. Drawn with currentColor, so it takes the text color of its container unless `color` is set.",
-        "keywords": ["icon", "animated icon", "lucide", "svg", "micro-interaction", "trash", "delete"],
+        "keywords": [
+            "icon",
+            "animated icon",
+            "lucide",
+            "svg",
+            "micro-interaction",
+            "trash",
+            "delete"
+        ],
         "features": [
             "Plays on click or hover of its host (nearest button, link, [role=button], [role=menuitem], or a custom selector) with no workflow",
             "Keyboard parity: Enter / Space click the host, focus plays the hover animation",
@@ -16,17 +24,42 @@
     "properties": [
         {
             "name": "icon",
-            "description": "Which icon to draw.",
+            "description": "Which icon to draw: a Lucide name (`lucide/` prefix accepted, `trash` = `trash-2`). Animations from lucide-animated where it has one, designed in the same style otherwise.",
             "type": "string",
-            "options": ["trash"],
-            "defaultValue": "trash",
+            "options": [
+                "archive",
+                "arrow-right",
+                "check",
+                "chevron-up",
+                "circle-check",
+                "copy",
+                "eye",
+                "folder-input",
+                "gallery-horizontal-end",
+                "panel-left-close",
+                "panel-left-open",
+                "panel-right-open",
+                "plus",
+                "refresh-cw",
+                "search",
+                "sparkles",
+                "trash-2",
+                "upload",
+                "x"
+            ],
+            "defaultValue": "trash-2",
             "bindable": true
         },
         {
             "name": "trigger",
             "description": "What plays the animation. 'click' = a click on the host goes to the animated pose and comes back; 'hover' = animated while the pointer (or keyboard focus) is on the host; 'state' = animated while `active` is true; 'manual' = only the play / start / stop actions.",
             "type": "string",
-            "options": ["click", "hover", "state", "manual"],
+            "options": [
+                "click",
+                "hover",
+                "state",
+                "manual"
+            ],
             "defaultValue": "click",
             "bindable": true
         },

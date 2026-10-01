@@ -1,19 +1,24 @@
-// Icon registry. To add an icon: one file in this folder (see trash.js for the format),
-// one line here, and the value in AI.json's `icon` options.
-//
-// Format of an icon:
-// - `parts`: groups of SVG elements that move together. `elements` = [tag, attributes]
-//   on Lucide's 24×24 grid; `normal` / `animate` = poses (x, y in grid units, rotate in
-//   degrees, scale, opacity — omitted channels keep their default). `origin` = CSS
-//   transform-origin, relative to the part's own box (default `center`).
-// - `transition`: spring (stiffness, damping, mass), as in Motion.
-// - `clickHold`: ms spent on `animate` before coming back, for a click.
-import trash from './trash.js';
+// Icon registry. Keys are Lucide names, so a WeWeb icon `lucide/<name>` maps to `<name>`.
+// - ported.js: animations from lucide-animated, unchanged;
+// Adding an icon: an entry in one of those files (format in engine.js / shared.js), then the
+// value in AI.json's `icon` options (`npm test` checks they match).
+import ported from './ported.js';
 
-export const ICONS = {
-    trash,
-};
+export const ICONS = { ...ported };
 
-export const DEFAULT_ICON = 'trash';
+// Old names still accepted (instances saved with them keep working).
+export const ALIASES = { trash: 'trash-2' };
 
-export const ICON_OPTIONS = Object.entries(ICONS).map(([value, icon]) => ({ value, label: icon.label }));
+export const DEFAULT_ICON = 'trash-2';
+
+// Accepts `trash-2`, `lucide/trash-2` or an alias; unknown → null.
+export function resolveIcon(name) {
+    if (typeof name !== 'string') return null;
+    const bare = name.trim().replace(/^lucide\//, '');
+    const key = ICONS[bare] ? bare : ALIASES[bare];
+    return key && ICONS[key] ? key : null;
+}
+
+export const ICON_OPTIONS = Object.entries(ICONS)
+    .map(([value, icon]) => ({ value, label: icon.label }))
+    .sort((a, b) => a.label.localeCompare(b.label));

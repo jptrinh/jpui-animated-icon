@@ -16,29 +16,38 @@
             focusable="false"
             aria-hidden="true"
         >
-            <g
-                v-for="part in icon.parts"
-                :key="iconName + ':' + part.id"
-                class="jp-animated-icon__part"
-                :data-part="part.id"
-                :style="{ transformOrigin: part.origin || 'center' }"
-            >
-                <component :is="element[0]" v-for="(element, index) in part.elements" :key="index" v-bind="element[1]" />
-            </g>
+            <IconNodes :key="iconName" :icon="icon" />
         </svg>
     </span>
 </template>
 
 <script>
-// Animated SVG icon. Icons are data (src/icons), moved by a spring (src/spring.js).
-// Frames are written straight to the parts' style (no Vue re-render per frame).
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
-import { ICONS, DEFAULT_ICON } from './icons/index.js';
-import { createAnimator, poseToStyle } from './spring.js';
+// Animated SVG icon. Icons are data (src/icons), animated by src/engine.js (Motion's model).
+// Frames are written straight to the nodes' style / attributes (no Vue re-render per frame).
+import { computed, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { ICONS, DEFAULT_ICON, resolveIcon } from './icons/index.js';
+import { createAnimator, nodeOutput } from './engine.js';
+
+// Renders the icon's element tree. `data-node` ids match engine.collectNodes().
+const isAnimated = el => !!(el.normal || el.animate);
+const nodeStyle = (el, box = 'fill-box') =>
+    isAnimated(el) ? { transformBox: box, transformOrigin: el.origin || '50% 50%' } : undefined;
+function renderElements(elements, prefix) {
+    return (elements || []).map((el, index) => {
+        const id = prefix ? `${prefix}.${index}` : String(index);
+        return h(el.tag, { ...el.attrs, 'data-node': id, style: nodeStyle(el) }, renderElements(el.children, id));
+    });
+}
+const IconNodes = props => {
+    const icon = props.icon || {};
+    const content = renderElements(icon.elements, '');
+    if (!icon.root) return content;
+    return [h('g', { 'data-node': 'root', style: nodeStyle(icon.root, 'view-box') }, content)];
+};
+IconNodes.props = ['icon'];
 
 const TRIGGERS = ['click', 'hover', 'state', 'manual'];
 const DEFAULT_HOST = 'button, a[href], [role="button"], [role="menuitem"], [role="link"], [role="tab"]';
-const DEFAULT_CLICK_HOLD = 200;
 const FIRST_FRAME = 1 / 60;
 
 const frontWindow = () => (typeof wwLib !== 'undefined' ? wwLib.getFrontWindow() : null);
@@ -49,6 +58,7 @@ const isDisabled = host =>
     host?.disabled === true || (typeof host?.getAttribute === 'function' && host.getAttribute('aria-disabled') === 'true');
 
 export default {
+    components: { IconNodes },
     props: {
         uid: { type: String, required: true },
         content: { type: Object, required: true },
@@ -60,7 +70,7 @@ export default {
     setup(props, { emit }) {
         const rootEl = ref(null);
 
-        const iconName = computed(() => (ICONS[props.content?.icon] ? props.content.icon : DEFAULT_ICON));
+        const iconName = computed(() => resolveIcon(props.content?.icon) || DEFAULT_ICON);
         const icon = computed(() => ICONS[iconName.value]);
         const trigger = computed(() => (TRIGGERS.includes(props.content?.trigger) ? props.content.trigger : 'click'));
         const isActive = computed(() => trigger.value === 'state' && !!props.content?.active);
@@ -82,21 +92,20 @@ export default {
         let lastTime = null;
         let holdTimer = null;
         let running = false;
+        let returnWhenSettled = false; // click without `clickHold`: come back once `animate` ends
 
         // ---- Rendering --------------------------------------------------------------
 
         function apply() {
             const root = rootEl.value;
-            if (typeof root?.querySelectorAll !== 'function') return;
-            const elements = root.querySelectorAll('.jp-animated-icon__part');
-            const poses = new Map(animator.poses().map(p => [p.id, p.pose]));
-            elements.forEach(el => {
-                const pose = poses.get(el.getAttribute('data-part'));
-                if (!pose || !el.style) return;
-                const style = poseToStyle(pose);
-                el.style.transform = style.transform;
-                el.style.opacity = style.opacity;
-            });
+            if (typeof root?.querySelector !== 'function') return;
+            for (const node of animator.frame()) {
+                const el = root.querySelector(`[data-node="${node.id}"]`);
+                if (!el?.style || typeof el.setAttribute !== 'function') continue;
+                const { style, attrs } = nodeOutput(node.keys, node.values);
+                Object.assign(el.style, style);
+                for (const [name, value] of Object.entries(attrs)) el.setAttribute(name, value);
+            }
         }
 
         function reducedMotion() {
@@ -125,9 +134,17 @@ export default {
             lastTime = time;
             const done = animator.step(dt * speed.value);
             apply();
+            if (!done && returnWhenSettled && animator.target === 'animate' && animator.isSettled()) {
+                returnWhenSettled = false;
+                animator.setTarget(restState()); // keeps running: no end / start events in between
+            }
             if (done) {
                 lastTime = null;
                 finish();
+                if (returnWhenSettled && animator.target === 'animate') {
+                    returnWhenSettled = false;
+                    goTo(restState());
+                }
                 return;
             }
             frame = frontWindow()?.requestAnimationFrame?.(tick) ?? null;
@@ -157,21 +174,30 @@ export default {
         function clearHold() {
             if (holdTimer !== null) frontWindow()?.clearTimeout?.(holdTimer);
             holdTimer = null;
+            returnWhenSettled = false;
         }
+
+        const restState = () => (isActive.value ? 'animate' : 'normal');
 
         // ---- Actions ----------------------------------------------------------------
 
-        // Go to the animated pose, hold, come back (to the Active pose in State mode).
+        // Play `animate`, then come back to rest (to the Active pose in State mode): after the
+        // icon's `clickHold` ms if it has one, else as soon as `animate` has finished.
         function play() {
             clearHold();
             if (reducedMotion()) return;
             goTo('animate');
             const hold = Number(icon.value?.clickHold);
-            const delay = (Number.isFinite(hold) && hold >= 0 ? hold : DEFAULT_CLICK_HOLD) / speed.value;
-            holdTimer = frontWindow()?.setTimeout?.(() => {
-                holdTimer = null;
-                goTo(isActive.value ? 'animate' : 'normal');
-            }, delay);
+            if (Number.isFinite(hold) && hold >= 0) {
+                holdTimer = frontWindow()?.setTimeout?.(() => {
+                    holdTimer = null;
+                    goTo(restState());
+                }, hold / speed.value);
+            } else if (animator.isAtRest()) {
+                goTo(restState());
+            } else {
+                returnWhenSettled = true;
+            }
         }
 
         function start() {
@@ -314,10 +340,6 @@ export default {
     display: block;
     width: 100%;
     height: 100%;
-    overflow: visible; // the lid rises above the 24×24 box
-}
-
-.jp-animated-icon__part {
-    transform-box: fill-box;
+    overflow: visible; // some icons move a little outside the 24×24 box
 }
 </style>
