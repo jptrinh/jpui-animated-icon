@@ -169,7 +169,7 @@
     "slots": [],
     "localContext": [],
     "specifications": [
-        "Click and hover are listened to on the front document in capture phase, then matched against the host, so the host needs no workflow and a stopPropagation inside it does not block the icon.",
+        "Click and hover are listened to on the host element itself (click in capture phase, so a child stopping propagation does not hide it), found when the icon mounts and again when it updates or when Play on / Host selector change. Events elsewhere in the page cost nothing; State and Manual modes attach no listener.",
         "A click while playing restarts from the current position (spring retargeting, no jump).",
         "With prefers-reduced-motion, click does nothing; hover, state and actions jump to the pose without motion."
     ],

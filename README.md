@@ -38,7 +38,8 @@ Events: *On animation start*, *On animation end* (`event.state`). Actions: *Play
 
 Behaviour: hover = `animate` while hovered, `normal` on leave (as in lucide-animated). Click =
 `animate`, then back to `normal` once it is visually done (or after the icon's `clickHold` ms).
-A disabled host (`disabled` / `aria-disabled="true"`) does not play; Enter / Space on the host
+Listeners sit on the host itself (none in State / Manual), so a page full of icons costs
+nothing when nothing happens to their buttons. A disabled host (`disabled` / `aria-disabled="true"`) does not play; Enter / Space on the host
 play it, keyboard focus plays the hover animation; `prefers-reduced-motion` = no motion.
 
 ⚠️ A host that disappears on click (a menu item that closes its menu) hides the animation:

@@ -24,7 +24,7 @@
 <script>
 // Animated SVG icon. Icons are data (src/icons), animated by src/engine.js (Motion's model).
 // Frames are written straight to the nodes' style / attributes (no Vue re-render per frame).
-import { computed, h, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, h, nextTick, onBeforeUnmount, onMounted, onUpdated, ref, watch } from 'vue';
 import { ICONS, DEFAULT_ICON, resolveIcon } from './icons/index.js';
 import { createAnimator, nodeOutput } from './engine.js';
 
@@ -51,7 +51,6 @@ const DEFAULT_HOST = 'button, a[href], [role="button"], [role="menuitem"], [role
 const FIRST_FRAME = 1 / 60;
 
 const frontWindow = () => (typeof wwLib !== 'undefined' ? wwLib.getFrontWindow() : null);
-const frontDocument = () => (typeof wwLib !== 'undefined' ? wwLib.getFrontDocument() : null);
 // Duck-typed: `instanceof Element` is always false in the editor (other realm).
 const canContain = node => typeof node?.contains === 'function';
 const isDisabled = host =>
@@ -225,77 +224,111 @@ export default {
             return host || parent;
         }
 
-        // Event inside the host, coming from outside it (pointerover / focusin) or
-        // leaving it (pointerout / focusout).
-        function crossesHost(event) {
-            const host = findHost();
-            if (!canContain(host) || !host.contains(event.target)) return null;
-            if (event.relatedTarget && host.contains(event.relatedTarget)) return null;
-            return host;
+        // Listeners live on the host itself (not on the document): an event elsewhere in
+        // the page costs nothing, whatever the number of icons. State / Manual: none.
+        function onClick() {
+            if (!isDisabled(boundHost)) play();
         }
 
-        function onClick(event) {
-            if (trigger.value !== 'click') return;
-            const host = findHost();
-            if (!canContain(host) || !host.contains(event.target) || isDisabled(host)) return;
-            play();
+        function onPointerEnter(event) {
+            if (event.pointerType !== 'touch' && !isDisabled(boundHost)) start();
         }
 
-        function onPointerOver(event) {
-            if (trigger.value !== 'hover' || event.pointerType === 'touch') return;
-            const host = crossesHost(event);
-            if (host && !isDisabled(host)) start();
+        function onPointerLeave(event) {
+            if (event.pointerType !== 'touch') stop();
         }
 
-        function onPointerOut(event) {
-            if (trigger.value !== 'hover' || event.pointerType === 'touch') return;
-            if (crossesHost(event)) stop();
-        }
-
-        // Keyboard users get the hover animation on focus.
+        // Keyboard users get the hover animation on focus (focusin / focusout bubble from
+        // the host's children: ignore moves inside the host).
         function onFocusIn(event) {
-            if (trigger.value !== 'hover') return;
+            if (event.relatedTarget && canContain(boundHost) && boundHost.contains(event.relatedTarget)) return;
             let visible = true;
             try {
                 visible = event.target?.matches?.(':focus-visible') ?? true;
             } catch (e) {
                 visible = true;
             }
-            const host = crossesHost(event);
-            if (host && visible && !isDisabled(host)) start();
+            if (visible && !isDisabled(boundHost)) start();
         }
 
         function onFocusOut(event) {
-            if (trigger.value !== 'hover') return;
-            if (crossesHost(event)) stop();
+            if (event.relatedTarget && canContain(boundHost) && boundHost.contains(event.relatedTarget)) return;
+            stop();
         }
 
-        const LISTENERS = [
-            ['click', onClick],
-            ['pointerover', onPointerOver],
-            ['pointerout', onPointerOut],
-            ['focusin', onFocusIn],
-            ['focusout', onFocusOut],
-        ];
-        let listenedDocument = null;
+        const LISTENERS = {
+            // capture: a child stopping the click's propagation cannot hide it from the icon
+            click: [['click', onClick, true]],
+            hover: [
+                ['pointerenter', onPointerEnter, false],
+                ['pointerleave', onPointerLeave, false],
+                ['focusin', onFocusIn, false],
+                ['focusout', onFocusOut, false],
+            ],
+        };
+        let boundHost = null;
+        let boundTrigger = null;
+        let bindRetry = null;
+        let bindAttempts = 0;
+
+        function unbindHost() {
+            (LISTENERS[boundTrigger] || []).forEach(([type, handler, capture]) =>
+                boundHost?.removeEventListener?.(type, handler, capture)
+            );
+            boundHost = null;
+            boundTrigger = null;
+        }
+
+        // Find the host and (re)attach the listeners if the host or the mode changed. Cheap
+        // when nothing changed, so it runs on mount, on every update and when settings change.
+        function bindHost() {
+            const wanted = LISTENERS[trigger.value] ? trigger.value : null;
+            // detached (not in the page yet): `closest` would stop short and pick the parent
+            const host = wanted && rootEl.value?.isConnected ? findHost() : null;
+            if (host === boundHost && wanted === boundTrigger) return;
+            unbindHost();
+            if (!host || typeof host.addEventListener !== 'function') {
+                // not attached to the page yet: try again on the next frames
+                if (wanted && bindAttempts++ < 20 && bindRetry === null) {
+                    bindRetry = frontWindow()?.requestAnimationFrame?.(() => {
+                        bindRetry = null;
+                        bindHost();
+                    }) ?? null;
+                }
+                return;
+            }
+            bindAttempts = 0;
+            LISTENERS[wanted].forEach(([type, handler, capture]) => host.addEventListener(type, handler, capture));
+            boundHost = host;
+            boundTrigger = wanted;
+        }
 
         onMounted(() => {
             animator.setTarget(isActive.value ? 'animate' : 'normal');
             animator.snap();
             apply();
-            // Capture phase on the document: works whatever the host does with the event.
-            listenedDocument = frontDocument();
-            LISTENERS.forEach(([type, handler]) => listenedDocument?.addEventListener?.(type, handler, true));
+            bindHost();
         });
 
+        onUpdated(bindHost);
+
         onBeforeUnmount(() => {
-            LISTENERS.forEach(([type, handler]) => listenedDocument?.removeEventListener?.(type, handler, true));
-            listenedDocument = null;
+            if (bindRetry !== null) frontWindow()?.cancelAnimationFrame?.(bindRetry);
+            bindRetry = null;
+            unbindHost();
             cancelFrame();
             clearHold();
         });
 
         // ---- Reactivity -----------------------------------------------------------------
+
+        watch(
+            () => [trigger.value, props.content?.hostSelector],
+            () => {
+                bindAttempts = 0;
+                bindHost();
+            }
+        );
 
         watch(isActive, active => {
             clearHold();
