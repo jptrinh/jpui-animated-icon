@@ -152,6 +152,14 @@ export default {
     },
     'panel-left': { label: 'Panel left', elements: [SQUARE(), path('M9 3v18', nudge('x', 1.5))] },
     'panel-right': { label: 'Panel right', elements: [SQUARE(), path('M15 3v18', nudge('x', -1.5))] },
+    'panel-bottom-close': {
+        label: 'Panel bottom close',
+        elements: [SQUARE(), path('M3 15h18'), path('m15 8-3 3-3-3', nudge('y', 1.5))],
+    },
+    'panel-bottom-open': {
+        label: 'Panel bottom open',
+        elements: [SQUARE(), path('M3 15h18'), path('m9 10 3-3 3 3', nudge('y', -1.5))],
+    },
     'panel-right-close': {
         label: 'Panel right close',
         elements: [SQUARE(), path('M15 3v18'), path('m8 9 3 3-3 3', nudge('x', 1.5))],
