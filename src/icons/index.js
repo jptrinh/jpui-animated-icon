@@ -21,6 +21,7 @@ export function resolveIcon(name) {
     return key && ICONS[key] ? key : null;
 }
 
-export const ICON_OPTIONS = Object.entries(ICONS)
-    .map(([value, icon]) => ({ value, label: icon.label }))
-    .sort((a, b) => a.label.localeCompare(b.label));
+// The label is the Lucide name itself, so the select shows what the icon is called in Lucide.
+export const ICON_OPTIONS = Object.keys(ICONS)
+    .sort()
+    .map(value => ({ value, label: value }));

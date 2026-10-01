@@ -8,7 +8,6 @@ const panel = (dividerX, arrow, amount) => ({
 
 export default {
     archive: {
-        label: 'Archive',
         elements: [
             rect(2, 3, 20, 5, 1, {
                 normal: { y: 0, transition: { type: 'spring', stiffness: 200, damping: 25 } },
@@ -22,7 +21,6 @@ export default {
         ],
     },
     'arrow-left': {
-        label: 'Arrow left',
         elements: [
             path('m12 19-7-7 7-7', {
                 normal: { x: 0 },
@@ -35,7 +33,6 @@ export default {
         ],
     },
     'arrow-right': {
-        label: 'Arrow right',
         elements: [
             path('M5 12h14', {
                 normal: { d: 'M5 12h14' },
@@ -48,7 +45,6 @@ export default {
         ],
     },
     check: {
-        label: 'Check',
         elements: [
             path('M4 12 9 17L20 6', {
                 normal: { opacity: 1, pathLength: 1, scale: 1, transition: { duration: 0.3, opacity: { duration: 0.1 } } },
@@ -62,15 +58,12 @@ export default {
         ],
     },
     'chevron-up': {
-        label: 'Chevron up',
         elements: [path('m18 15-6-6-6 6', nudge('y', -2))],
     },
     'circle-check': {
-        label: 'Circle check',
         elements: [circle(12, 12, 10), path('m9 12 2 2 4-4', draw())],
     },
     copy: {
-        label: 'Copy',
         transition: { type: 'spring', stiffness: 160, damping: 17, mass: 1 },
         elements: [
             rect(8, 8, 14, 14, 2, { normal: { x: 0, y: 0 }, animate: { x: -3, y: -3 } }, { ry: 2 }),
@@ -81,7 +74,6 @@ export default {
         ],
     },
     eye: {
-        label: 'Eye',
         transition: { duration: 0.4, ease: 'easeInOut' },
         elements: [
             path('M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0', {
@@ -92,14 +84,12 @@ export default {
         ],
     },
     'folder-input': {
-        label: 'Folder input',
         elements: [
             path('M2 9V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1'),
             g([path('M2 13h10'), path('m9 16 3-3-3-3')], nudge('x', 2)),
         ],
     },
     'gallery-horizontal-end': {
-        label: 'Gallery',
         // `custom` i = 2 then 1: translateX [2i, 0], delay 0.25 × (2 − i)
         elements: [
             path('M6 5v14', {
@@ -114,7 +104,6 @@ export default {
         ],
     },
     lock: {
-        label: 'Lock',
         root: {
             normal: { rotate: 0, scale: 1 },
             animate: { rotate: [-3, 1, -2, 0], scale: [0.95, 1.05, 0.98, 1] },
@@ -130,7 +119,6 @@ export default {
         ],
     },
     'lock-open': {
-        label: 'Unlock',
         root: {
             normal: { rotate: 0, scale: 1 },
             animate: { rotate: [2, 4, -2, 0], scale: [1.05, 0.95, 1.02, 1] },
@@ -145,16 +133,14 @@ export default {
             }),
         ],
     },
-    'panel-left-close': { label: 'Panel left close', ...panel(9, 'm16 15-3-3 3-3', -1.5) },
-    'panel-left-open': { label: 'Panel left open', ...panel(9, 'm14 9 3 3-3 3', 1.5) },
-    'panel-right-open': { label: 'Panel right open', ...panel(15, 'm10 15-3-3 3-3', -1.5) },
+    'panel-left-close': { ...panel(9, 'm16 15-3-3 3-3', -1.5) },
+    'panel-left-open': { ...panel(9, 'm14 9 3 3-3 3', 1.5) },
+    'panel-right-open': { ...panel(15, 'm10 15-3-3 3-3', -1.5) },
     plus: {
-        label: 'Plus',
         root: { normal: { rotate: 0 }, animate: { rotate: 180 }, transition: { type: 'spring', stiffness: 100, damping: 15 } },
         elements: [path('M5 12h14'), path('M12 5v14')],
     },
     'refresh-cw': {
-        label: 'Refresh',
         root: { normal: { rotate: 0 }, animate: { rotate: 50 }, transition: { type: 'spring', stiffness: 250, damping: 25 } },
         elements: [
             path('M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8'),
@@ -164,7 +150,6 @@ export default {
         ],
     },
     search: {
-        label: 'Search',
         root: {
             normal: { x: 0, y: 0 },
             animate: { x: [0, 0, -3 * PX, 0], y: [0, -4 * PX, 0, 0] },
@@ -173,7 +158,6 @@ export default {
         elements: [circle(11, 11, 8), path('m21 21-4.3-4.3')],
     },
     sparkles: {
-        label: 'Sparkles',
         elements: [
             path(
                 'M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z',
@@ -192,7 +176,6 @@ export default {
     },
     // lucide-animated `delete`; `trash` is kept as an alias (see index.js).
     'trash-2': {
-        label: 'Trash',
         transition: { type: 'spring', stiffness: 500, damping: 30 },
         clickHold: 200,
         elements: [
@@ -202,7 +185,6 @@ export default {
         ],
     },
     upload: {
-        label: 'Upload',
         elements: [
             path('M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'),
             g([el('polyline', { points: '17 8 12 3 7 8' }), line(12, 3, 12, 15)], {
@@ -212,7 +194,6 @@ export default {
         ],
     },
     x: {
-        label: 'X',
         elements: [
             path('M18 6 6 18', { normal: { opacity: 1, pathLength: 1 }, animate: { opacity: [0, 1], pathLength: [0, 1] } }),
             path('m6 6 12 12', {

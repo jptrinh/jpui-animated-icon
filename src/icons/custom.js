@@ -18,14 +18,12 @@ const SQUARE = () => rect(3, 3, 18, 18, 2);
 
 export default {
     'a-large-small': {
-        label: 'Text size',
         elements: [
             g([path('m15 16 2.536-7.328a1.02 1.02 1 0 1 1.928 0L22 16'), path('M15.697 14h5.606')], pulse(0.85, '50% 100%')),
             g([path('m2 16 4.039-9.69a.5.5 0 0 1 .923 0L11 16'), path('M3.304 13h6.392')], pulse(1.12, '50% 100%')),
         ],
     },
     'archive-restore': {
-        label: 'Unarchive',
         elements: [
             rect(2, 3, 20, 5, 1, {
                 normal: { y: 0, transition: { type: 'spring', stiffness: 200, damping: 25 } },
@@ -37,23 +35,19 @@ export default {
         ],
     },
     'circle-alert': {
-        label: 'Alert',
         elements: [
             circle(12, 12, 10),
             g([line(12, 8, 12, 12), line(12, 16, 12.01, 16)], swing([0, -14, 10, -6, 0], '50% 100%')),
         ],
     },
-    'circle-minus': { label: 'Circle minus', elements: [circle(12, 12, 10), path('M8 12h8', draw())] },
+    'circle-minus': { elements: [circle(12, 12, 10), path('M8 12h8', draw())] },
     'circle-x': {
-        label: 'Circle X',
         elements: [circle(12, 12, 10), path('m15 9-6 6', draw()), path('m9 9 6 6', draw(0.2))],
     },
     crop: {
-        label: 'Crop',
         elements: [path('M6 2v14a2 2 0 0 0 2 2h14', shift(-1.5, 1.5)), path('M18 22V8a2 2 0 0 0-2-2H2', shift(1.5, -1.5))],
     },
     ellipsis: {
-        label: 'More',
         elements: [5, 12, 19].map((cx, i) =>
             circle(cx, 12, 1, {
                 normal: { y: 0 },
@@ -64,7 +58,6 @@ export default {
     },
     // Lucide renamed it `funnel`; WeWeb's set still calls it `filter`.
     filter: {
-        label: 'Filter',
         elements: [
             path(
                 'M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z',
@@ -78,7 +71,6 @@ export default {
         ],
     },
     folder: {
-        label: 'Folder',
         elements: [
             path(
                 'M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z',
@@ -87,7 +79,6 @@ export default {
         ],
     },
     'grid-2x2': {
-        label: 'Grid',
         elements: [
             g([path('M12 3v18'), path('M3 12h18')], {
                 normal: { rotate: 0 },
@@ -98,7 +89,6 @@ export default {
         ],
     },
     image: {
-        label: 'Image',
         elements: [
             rect(3, 3, 18, 18, 2, undefined, { ry: 2 }),
             circle(9, 9, 2, {
@@ -110,7 +100,6 @@ export default {
         ],
     },
     images: {
-        label: 'Images',
         elements: [
             g(
                 [
@@ -124,7 +113,6 @@ export default {
         ],
     },
     'list-plus': {
-        label: 'Add to list',
         elements: [
             path('M16 5H3'),
             path('M11 12H3'),
@@ -137,7 +125,6 @@ export default {
         ],
     },
     'mouse-pointer-2': {
-        label: 'Pointer',
         elements: [
             path(
                 'M4.037 4.688a.495.495 0 0 1 .651-.651l16 6.5a.5.5 0 0 1-.063.947l-6.124 1.58a2 2 0 0 0-1.438 1.435l-1.579 6.126a.5.5 0 0 1-.947.063z',
@@ -150,22 +137,18 @@ export default {
             ),
         ],
     },
-    'panel-left': { label: 'Panel left', elements: [SQUARE(), path('M9 3v18', nudge('x', 1.5))] },
-    'panel-right': { label: 'Panel right', elements: [SQUARE(), path('M15 3v18', nudge('x', -1.5))] },
+    'panel-left': { elements: [SQUARE(), path('M9 3v18', nudge('x', 1.5))] },
+    'panel-right': { elements: [SQUARE(), path('M15 3v18', nudge('x', -1.5))] },
     'panel-bottom-close': {
-        label: 'Panel bottom close',
         elements: [SQUARE(), path('M3 15h18'), path('m15 8-3 3-3-3', nudge('y', 1.5))],
     },
     'panel-bottom-open': {
-        label: 'Panel bottom open',
         elements: [SQUARE(), path('M3 15h18'), path('m9 10 3-3 3 3', nudge('y', -1.5))],
     },
     'panel-right-close': {
-        label: 'Panel right close',
         elements: [SQUARE(), path('M15 3v18'), path('m8 9 3 3-3 3', nudge('x', 1.5))],
     },
     pencil: {
-        label: 'Edit',
         elements: [
             g(
                 [
@@ -179,11 +162,9 @@ export default {
         ],
     },
     ratio: {
-        label: 'Ratio',
         elements: [rect(6, 2, 12, 20, 2, pulse(0.9)), rect(2, 6, 20, 12, 2, pulse(1.08))],
     },
     share: {
-        label: 'Share',
         elements: [
             g([path('M12 2v13'), path('m16 6-4-4-4 4')], {
                 normal: { y: 0 },
@@ -192,11 +173,10 @@ export default {
             path('M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8'),
         ],
     },
-    square: { label: 'Square', elements: [rect(3, 3, 18, 18, 2, pulse(0.88, '50% 50%', 0.4))] },
-    'square-check': { label: 'Square check', elements: [SQUARE(), path('m16 9-5.5 5.5L8 12', draw())] },
-    'square-minus': { label: 'Square minus', elements: [SQUARE(), path('M8 12h8', draw())] },
+    square: { elements: [rect(3, 3, 18, 18, 2, pulse(0.88, '50% 50%', 0.4))] },
+    'square-check': { elements: [SQUARE(), path('m16 9-5.5 5.5L8 12', draw())] },
+    'square-minus': { elements: [SQUARE(), path('M8 12h8', draw())] },
     tag: {
-        label: 'Tag',
         elements: [
             g(
                 [
@@ -210,7 +190,6 @@ export default {
         ],
     },
     tags: {
-        label: 'Tags',
         elements: [
             g(
                 [

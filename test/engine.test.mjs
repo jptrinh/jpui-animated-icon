@@ -96,7 +96,6 @@ assert.equal(out.attrs.pathLength, '1');
 const TAGS = ['path', 'line', 'circle', 'rect', 'polyline', 'polygon', 'ellipse', 'g'];
 const walk = (elements, fn) => (elements || []).forEach(el => (fn(el), walk(el.children, fn)));
 for (const [name, icon] of Object.entries(ICONS)) {
-    assert.ok(icon.label, `${name}: label`);
     walk(icon.elements, el => assert.ok(TAGS.includes(el.tag), `${name}: tag ${el.tag}`));
     const nodes = collectNodes(icon);
     assert.ok(nodes.length > 0, `${name}: has animated nodes`);

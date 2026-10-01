@@ -12,57 +12,57 @@ The icon plays **by itself** when the button around it is clicked or hovered: no
 22 come from lucide-animated (`src/icons/ported.js`, same paths, variants and transitions); the 27 it
 does not have are animated here in the same style (`src/icons/custom.js`).
 
-| Icon | Label in WeWeb | Animation | Source |
-|---|---|---|---|
-| `a-large-small` | Text size | The big A grows, the small a shrinks, from their baseline | designed here |
-| `archive` | Archive | The lid lifts, the box drops slightly and its slot moves down | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `archive-restore` | Unarchive | The lid lifts, the arrow bounces up | designed here |
-| `arrow-left` | Arrow left | The shaft shortens while the head pulls forward, then both return | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `arrow-right` | Arrow right | The shaft shortens while the head pulls back, then both return | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `check` | Check | The check draws itself while growing in | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `chevron-up` | Chevron up | The chevron bounces up | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `circle-alert` | Alert | The exclamation mark wobbles on its dot | designed here |
-| `circle-check` | Circle check | The check draws itself inside the circle | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `circle-minus` | Circle minus | The minus draws itself inside the circle | designed here |
-| `circle-x` | Circle X | The two strokes of the X draw one after the other | designed here |
-| `copy` | Copy | The two sheets slide over each other (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `crop` | Crop | The two corners move apart, then back | designed here |
-| `ellipsis` | More | The three dots bounce one after the other | designed here |
-| `eye` | Eye | The eye blinks | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `filter` | Filter | The funnel squeezes and springs back | designed here |
-| `folder` | Folder | The folder hops | designed here |
-| `folder-input` | Folder input | The arrow pushes into the folder | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `gallery-horizontal-end` | Gallery | The stacked edges slide in one after the other | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `grid-2x2` | Grid | The inner cross turns a quarter (spring) | designed here |
-| `image` | Image | The sun rises and glows | designed here |
-| `images` | Images | The two pictures spread apart, then back | designed here |
-| `list-plus` | Add to list | The plus turns a quarter (spring) | designed here |
-| `lock` | Lock | The padlock wobbles and the shackle retracts a little | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `lock-open` | Unlock | The open padlock wobbles and the shackle closes up | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `mouse-pointer-2` | Pointer | The pointer presses toward its tip | designed here |
-| `panel-bottom-close` | Panel bottom close | The chevron nudges down | designed here |
-| `panel-bottom-open` | Panel bottom open | The chevron nudges up | designed here |
-| `panel-left` | Panel left | The divider nudges right | designed here |
-| `panel-left-close` | Panel left close | The arrow nudges left | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `panel-left-open` | Panel left open | The arrow nudges right | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `panel-right` | Panel right | The divider nudges left | designed here |
-| `panel-right-close` | Panel right close | The arrow nudges right | designed here |
-| `panel-right-open` | Panel right open | The arrow nudges left | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `pencil` | Edit | The pencil wiggles on its tip | designed here |
-| `plus` | Plus | The plus turns half a turn (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `ratio` | Ratio | The portrait frame shrinks, the landscape one grows | designed here |
-| `refresh-cw` | Refresh | The arrows turn (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `search` | Search | The magnifier hops up, then sideways | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `share` | Share | The arrow rises (spring) | designed here |
-| `sparkles` | Sparkles | The big star hops and fills, the small ones blink | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `square` | Square | The square pulses | designed here |
-| `square-check` | Square check | The check draws itself inside the square | designed here |
-| `square-minus` | Square minus | The minus draws itself inside the square | designed here |
-| `tag` | Tag | The tag swings on its hole | designed here |
-| `tags` | Tags | The tags swing on their hole | designed here |
-| `trash-2` | Trash | The lid lifts, the can drops (spring) — alias `trash` | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `upload` | Upload | The arrow rises (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
-| `x` | X | The two strokes draw one after the other | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| Icon | Animation | Source |
+|---|---|---|
+| `a-large-small` | The big A grows, the small a shrinks, from their baseline | designed here |
+| `archive` | The lid lifts, the box drops slightly and its slot moves down | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `archive-restore` | The lid lifts, the arrow bounces up | designed here |
+| `arrow-left` | The shaft shortens while the head pulls forward, then both return | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `arrow-right` | The shaft shortens while the head pulls back, then both return | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `check` | The check draws itself while growing in | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `chevron-up` | The chevron bounces up | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `circle-alert` | The exclamation mark wobbles on its dot | designed here |
+| `circle-check` | The check draws itself inside the circle | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `circle-minus` | The minus draws itself inside the circle | designed here |
+| `circle-x` | The two strokes of the X draw one after the other | designed here |
+| `copy` | The two sheets slide over each other (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `crop` | The two corners move apart, then back | designed here |
+| `ellipsis` | The three dots bounce one after the other | designed here |
+| `eye` | The eye blinks | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `filter` | The funnel squeezes and springs back | designed here |
+| `folder` | The folder hops | designed here |
+| `folder-input` | The arrow pushes into the folder | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `gallery-horizontal-end` | The stacked edges slide in one after the other | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `grid-2x2` | The inner cross turns a quarter (spring) | designed here |
+| `image` | The sun rises and glows | designed here |
+| `images` | The two pictures spread apart, then back | designed here |
+| `list-plus` | The plus turns a quarter (spring) | designed here |
+| `lock` | The padlock wobbles and the shackle retracts a little | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `lock-open` | The open padlock wobbles and the shackle closes up | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `mouse-pointer-2` | The pointer presses toward its tip | designed here |
+| `panel-bottom-close` | The chevron nudges down | designed here |
+| `panel-bottom-open` | The chevron nudges up | designed here |
+| `panel-left` | The divider nudges right | designed here |
+| `panel-left-close` | The arrow nudges left | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `panel-left-open` | The arrow nudges right | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `panel-right` | The divider nudges left | designed here |
+| `panel-right-close` | The arrow nudges right | designed here |
+| `panel-right-open` | The arrow nudges left | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `pencil` | The pencil wiggles on its tip | designed here |
+| `plus` | The plus turns half a turn (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `ratio` | The portrait frame shrinks, the landscape one grows | designed here |
+| `refresh-cw` | The arrows turn (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `search` | The magnifier hops up, then sideways | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `share` | The arrow rises (spring) | designed here |
+| `sparkles` | The big star hops and fills, the small ones blink | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `square` | The square pulses | designed here |
+| `square-check` | The check draws itself inside the square | designed here |
+| `square-minus` | The minus draws itself inside the square | designed here |
+| `tag` | The tag swings on its hole | designed here |
+| `tags` | The tags swing on their hole | designed here |
+| `trash-2` | The lid lifts, the can drops (spring) — alias `trash` | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `upload` | The arrow rises (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `x` | The two strokes draw one after the other | [lucide-animated](https://github.com/pqoqubbw/icons) |
 
 See them all: `npm run harness`, then http://localhost:4173/harness/ (hover or click mode).
 
