@@ -22,3 +22,9 @@ assert.deepEqual(
     'trigger options'
 );
 console.log('AI.json: mirrors ww-config.js');
+
+// README lists every icon (one table row per registry entry)
+const readme = readFileSync(new URL('../README.md', import.meta.url), 'utf8');
+const listed = [...readme.matchAll(/^\| `([a-z0-9-]+)` \|/gm)].map(m => m[1]);
+assert.deepEqual([...listed].sort(), ICON_OPTIONS.map(o => o.value).sort(), 'README icon table');
+console.log('README: lists every icon');

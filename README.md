@@ -8,17 +8,56 @@ The icon plays **by itself** when the button around it is clicked or hovered: no
 
 ## Icons
 
-44 Lucide icons, named as in Lucide (`trash-2`; `lucide/trash-2` and the old `trash` are accepted):
+44 Lucide icons, named as in Lucide (`lucide/trash-2` and the old `trash` are accepted; `funnel` = `filter`).
+19 come from lucide-animated (`src/icons/ported.js`, same paths, variants and transitions); the 25 it
+does not have are animated here in the same style (`src/icons/custom.js`).
 
-- **Ported from lucide-animated** (`src/icons/ported.js`, same paths, variants and transitions):
-  archive, arrow-right, check, chevron-up, circle-check, copy, eye, folder-input,
-  gallery-horizontal-end, panel-left-close, panel-left-open, panel-right-open, plus,
-  refresh-cw, search, sparkles, trash-2, upload, x.
-- **Designed here** for the icons lucide-animated does not have (`src/icons/custom.js`):
-  a-large-small, archive-restore, circle-alert, circle-minus, circle-x, crop, ellipsis,
-  filter, folder, grid-2x2, image, images, list-plus, mouse-pointer-2, panel-left,
-  panel-right, panel-right-close, pencil, ratio, share, square, square-check,
-  square-minus, tag, tags.
+| Icon | Label in WeWeb | Animation | Source |
+|---|---|---|---|
+| `a-large-small` | Text size | The big A grows, the small a shrinks, from their baseline | designed here |
+| `archive` | Archive | The lid lifts, the box drops slightly and its slot moves down | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `archive-restore` | Unarchive | The lid lifts, the arrow bounces up | designed here |
+| `arrow-right` | Arrow right | The shaft shortens while the head pulls back, then both return | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `check` | Check | The check draws itself while growing in | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `chevron-up` | Chevron up | The chevron bounces up | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `circle-alert` | Alert | The exclamation mark wobbles on its dot | designed here |
+| `circle-check` | Circle check | The check draws itself inside the circle | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `circle-minus` | Circle minus | The minus draws itself inside the circle | designed here |
+| `circle-x` | Circle X | The two strokes of the X draw one after the other | designed here |
+| `copy` | Copy | The two sheets slide over each other (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `crop` | Crop | The two corners move apart, then back | designed here |
+| `ellipsis` | More | The three dots bounce one after the other | designed here |
+| `eye` | Eye | The eye blinks | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `filter` | Filter | The funnel squeezes and springs back | designed here |
+| `folder` | Folder | The folder hops | designed here |
+| `folder-input` | Folder input | The arrow pushes into the folder | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `gallery-horizontal-end` | Gallery | The stacked edges slide in one after the other | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `grid-2x2` | Grid | The inner cross turns a quarter (spring) | designed here |
+| `image` | Image | The sun rises and glows | designed here |
+| `images` | Images | The two pictures spread apart, then back | designed here |
+| `list-plus` | Add to list | The plus turns a quarter (spring) | designed here |
+| `mouse-pointer-2` | Pointer | The pointer presses toward its tip | designed here |
+| `panel-left` | Panel left | The divider nudges right | designed here |
+| `panel-left-close` | Panel left close | The arrow nudges left | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `panel-left-open` | Panel left open | The arrow nudges right | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `panel-right` | Panel right | The divider nudges left | designed here |
+| `panel-right-close` | Panel right close | The arrow nudges right | designed here |
+| `panel-right-open` | Panel right open | The arrow nudges left | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `pencil` | Edit | The pencil wiggles on its tip | designed here |
+| `plus` | Plus | The plus turns half a turn (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `ratio` | Ratio | The portrait frame shrinks, the landscape one grows | designed here |
+| `refresh-cw` | Refresh | The arrows turn (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `search` | Search | The magnifier hops up, then sideways | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `share` | Share | The arrow rises (spring) | designed here |
+| `sparkles` | Sparkles | The big star hops and fills, the small ones blink | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `square` | Square | The square pulses | designed here |
+| `square-check` | Square check | The check draws itself inside the square | designed here |
+| `square-minus` | Square minus | The minus draws itself inside the square | designed here |
+| `tag` | Tag | The tag swings on its hole | designed here |
+| `tags` | Tags | The tags swing on their hole | designed here |
+| `trash-2` | Trash | The lid lifts, the can drops (spring) — alias `trash` | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `upload` | Upload | The arrow rises (spring) | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `x` | X | The two strokes draw one after the other | [lucide-animated](https://github.com/pqoqubbw/icons) |
 
 See them all: `npm run harness`, then http://localhost:4173/harness/ (hover or click mode).
 
@@ -64,7 +103,7 @@ whole drawing (lucide-animated's `motion.svg`; px there = 24/28 grid unit, see `
    `translateX` → `x`, a `custom` index → explicit values).
 2. It does not: add it to `custom.js`, with the Lucide paths and the helpers of `shared.js`
    (`nudge`, `draw`, `swing`…).
-3. Add the name to the `icon` options in `AI.json`.
+3. Add the name to the `icon` options in `AI.json` and a row to the table above.
 4. `npm test` (every icon must animate, settle and come back to rest), check it in the
    harness, push, re-sync in WeWeb.
 
