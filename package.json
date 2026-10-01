@@ -9,7 +9,8 @@
   "scripts": {
     "build": "weweb build",
     "serve": "weweb serve",
-    "test": "node --no-warnings test/spring.test.mjs && node --no-warnings test/ai-json.test.mjs"
+    "test": "node --no-warnings test/engine.test.mjs && node --no-warnings test/ai-json.test.mjs",
+    "harness": "echo \"Gallery: http://localhost:4173/harness/\" && python3 -m http.server 4173"
   },
   "devDependencies": {
     "@weweb/cli": "latest"

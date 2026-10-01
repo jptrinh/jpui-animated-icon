@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>jpui-animated-icon — gallery</title>
+<style>
+  :root { color-scheme: light dark; --bg: #f6f6f7; --card: #fff; --text: #1d1d1f; --muted: #6e6e73; --line: #e5e5e7; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #161618; --card: #1f1f21; --text: #f2f2f4; --muted: #98989d; --line: #343437; } }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.4 -apple-system, BlinkMacSystemFont, Inter, sans-serif; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+  header { display: flex; gap: 16px; align-items: baseline; flex-wrap: wrap; margin-bottom: 20px; }
+  h1 { font-size: 20px; margin: 0; }
+  label { color: var(--muted); display: inline-flex; gap: 6px; align-items: center; }
+  h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 28px 0 10px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+  button { all: unset; box-sizing: border-box; cursor: pointer; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 8px 12px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  button:hover { border-color: var(--muted); }
+  button:focus-visible { outline: 2px solid #007aff; outline-offset: 2px; }
+  svg { width: var(--size, 28px); height: var(--size, 28px); overflow: visible; }
+  .name { font-size: 12px; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>jpui-animated-icon</h1>
+    <label>Play on <select id="mode"><option value="hover">hover</option><option value="click">click</option></select></label>
+    <label>Size <input id="size" type="range" min="16" max="64" value="28" /></label>
+    <label>Speed <input id="speed" type="range" min="0.25" max="2" step="0.25" value="1" /></label>
+  </header>
+  <h2>Ported from lucide-animated</h2>
+  <div class="grid" id="ported"></div>
+  <h2>Designed for this component</h2>
+  <div class="grid" id="custom"></div>
+</div>
+<script type="module">
+  // Same engine and data as the WeWeb element; rendering redone in plain DOM.
+  import { createAnimator, nodeOutput } from '../src/engine.js';
+  import ported from '../src/icons/ported.js';
+  import custom from '../src/icons/custom.js';
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const $ = id => document.getElementById(id);
+  let mode = 'hover';
+  let speed = 1;
+  $('mode').onchange = e => (mode = e.target.value);
+  $('speed').oninput = e => (speed = Number(e.target.value));
+  $('size').oninput = e => document.documentElement.style.setProperty('--size', e.target.value + 'px');
+
+  function build(parent, elements, prefix) {
+    (elements || []).forEach((el, i) => {
+      const id = prefix ? `${prefix}.${i}` : String(i);
+      const node = document.createElementNS(NS, el.tag);
+      for (const [k, v] of Object.entries(el.attrs || {})) node.setAttribute(k, v);
+      node.setAttribute('data-node', id);
+      if (el.normal || el.animate) Object.assign(node.style, { transformBox: 'fill-box', transformOrigin: el.origin || '50% 50%' });
+      parent.appendChild(node);
+      build(node, el.children, id);
+    });
+  }
+
+  function card(name, icon, container) {
+    const button = document.createElement('button');
+    const svg = document.createElementNS(NS, 'svg');
+    Object.entries({ viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })
+      .forEach(([k, v]) => svg.setAttribute(k, v));
+    let parent = svg;
+    if (icon.root) {
+      parent = document.createElementNS(NS, 'g');
+      parent.setAttribute('data-node', 'root');
+      Object.assign(parent.style, { transformBox: 'view-box', transformOrigin: '50% 50%' });
+      svg.appendChild(parent);
+    }
+    build(parent, icon.elements, '');
+    button.append(svg, Object.assign(document.createElement('span'), { className: 'name', textContent: name }));
+    container.appendChild(button);
+
+    const animator = createAnimator(icon);
+    let raf = null, last = null, returnWhenSettled = false, hold = null;
+    const apply = () => animator.frame().forEach(n => {
+      const node = svg.querySelector(`[data-node="${n.id}"]`);
+      const { style, attrs } = nodeOutput(n.keys, n.values);
+      Object.assign(node.style, style);
+      Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+    });
+    const tick = t => {
+      raf = null;
+      const done = animator.step((last === null ? 1 / 60 : (t - last) / 1000) * speed);
+      last = t;
+      apply();
+      if (!done && returnWhenSettled && animator.target === 'animate' && animator.isSettled()) {
+        returnWhenSettled = false; animator.setTarget('normal');
+      }
+      if (done && returnWhenSettled) { returnWhenSettled = false; go('normal'); return; }
+      if (!done) raf = requestAnimationFrame(tick); else last = null;
+    };
+    const go = state => { animator.setTarget(state); if (!animator.isAtRest() && raf === null) { last = null; raf = requestAnimationFrame(tick); } };
+    const play = () => {
+      clearTimeout(hold); returnWhenSettled = false; go('animate');
+      if (Number.isFinite(icon.clickHold)) hold = setTimeout(() => go('normal'), icon.clickHold / speed);
+      else if (animator.isAtRest()) go('normal'); else returnWhenSettled = true;
+    };
+    apply();
+    button.addEventListener('pointerenter', () => mode === 'hover' && go('animate'));
+    button.addEventListener('pointerleave', () => mode === 'hover' && go('normal'));
+    button.addEventListener('click', () => mode === 'click' && play());
+  }
+
+  Object.entries(ported).forEach(([n, i]) => card(n, i, $('ported')));
+  Object.entries(custom).forEach(([n, i]) => card(n, i, $('custom')));
+</script>
+</body>
+</html>
