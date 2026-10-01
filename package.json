@@ -1,0 +1,17 @@
+{
+  "name": "jpui-animated-icon",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jptrinh/jpui-animated-icon"
+  },
+  "scripts": {
+    "build": "weweb build",
+    "serve": "weweb serve",
+    "test": "node --no-warnings test/spring.test.mjs && node --no-warnings test/ai-json.test.mjs"
+  },
+  "devDependencies": {
+    "@weweb/cli": "latest"
+  }
+}
