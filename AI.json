@@ -1,0 +1,128 @@
+{
+    "metadata": {
+        "name": "jpui-animated-icon",
+        "description": "An animated line icon (Lucide style, animations ported from lucide-animated). It plays by itself when the button, link or menu item around it is clicked or hovered, follows a bound boolean, or plays from workflow actions. Drawn with currentColor, so it takes the text color of its container unless `color` is set.",
+        "keywords": ["icon", "animated icon", "lucide", "svg", "micro-interaction", "trash", "delete"],
+        "features": [
+            "Plays on click or hover of its host (nearest button, link, [role=button], [role=menuitem], or a custom selector) with no workflow",
+            "Keyboard parity: Enter / Space click the host, focus plays the hover animation",
+            "State mode: moves to the animated pose while `active` is true",
+            "Spring motion, retargetable mid-flight (hover out halfway, click again)",
+            "Respects prefers-reduced-motion",
+            "currentColor by default; size, color and stroke width in the style panel",
+            "Disabled host (disabled or aria-disabled) does not play"
+        ]
+    },
+    "properties": [
+        {
+            "name": "icon",
+            "description": "Which icon to draw.",
+            "type": "string",
+            "options": ["trash"],
+            "defaultValue": "trash",
+            "bindable": true
+        },
+        {
+            "name": "trigger",
+            "description": "What plays the animation. 'click' = a click on the host goes to the animated pose and comes back; 'hover' = animated while the pointer (or keyboard focus) is on the host; 'state' = animated while `active` is true; 'manual' = only the play / start / stop actions.",
+            "type": "string",
+            "options": ["click", "hover", "state", "manual"],
+            "defaultValue": "click",
+            "bindable": true
+        },
+        {
+            "name": "hostSelector",
+            "description": "CSS selector of the ancestor that plays the icon in click / hover mode. Empty = the nearest button, link, [role=button], [role=menuitem], [role=link] or [role=tab]; if none, the icon's parent element.",
+            "type": "string",
+            "defaultValue": "",
+            "bindable": true
+        },
+        {
+            "name": "active",
+            "description": "State mode only: true = animated pose, false = rest.",
+            "type": "boolean",
+            "defaultValue": false,
+            "bindable": true
+        },
+        {
+            "name": "speed",
+            "description": "Playback speed multiplier (1 = original timing).",
+            "type": "number",
+            "defaultValue": 1,
+            "bindable": true
+        },
+        {
+            "name": "ariaLabel",
+            "description": "Accessible name. Leave empty when the icon sits in a named button: the icon is then hidden from screen readers.",
+            "type": "string",
+            "defaultValue": "",
+            "bindable": true
+        },
+        {
+            "name": "size",
+            "description": "CSS length of the icon box (width and height). Element width / height set in the style panel win over it.",
+            "type": "string",
+            "defaultValue": "1em",
+            "bindable": true
+        },
+        {
+            "name": "color",
+            "description": "Stroke color. Empty = currentColor (the text color around the icon).",
+            "type": "string",
+            "bindable": true
+        },
+        {
+            "name": "strokeWidth",
+            "description": "Line thickness on the 24×24 grid (Lucide default 2).",
+            "type": "number",
+            "defaultValue": 2,
+            "bindable": true
+        }
+    ],
+    "events": [
+        {
+            "name": "animationStart",
+            "description": "The icon starts moving from rest. `event.state` = the pose it heads to ('animate' or 'normal')."
+        },
+        {
+            "name": "animationEnd",
+            "description": "The icon comes to rest. `event.state` = the pose it rests on."
+        }
+    ],
+    "actions": [
+        {
+            "label": "Play (go and come back)",
+            "actionName": "play",
+            "description": "Same as a click: animated pose, short hold, back to rest (or to the Active pose in state mode)."
+        },
+        {
+            "label": "Start (go to the animated pose)",
+            "actionName": "start",
+            "description": "Move to the animated pose and stay there."
+        },
+        {
+            "label": "Stop (back to rest)",
+            "actionName": "stop",
+            "description": "Move back to rest."
+        }
+    ],
+    "variables": [],
+    "states": [],
+    "slots": [],
+    "localContext": [],
+    "specifications": [
+        "Click and hover are listened to on the front document in capture phase, then matched against the host, so the host needs no workflow and a stopPropagation inside it does not block the icon.",
+        "A click while playing restarts from the current position (spring retargeting, no jump).",
+        "With prefers-reduced-motion, click does nothing; hover, state and actions jump to the pose without motion."
+    ],
+    "examples": [
+        {
+            "description": "Trash icon inside a delete button: plays when the button is clicked.",
+            "example": "{\"icon\":\"trash\",\"trigger\":\"click\"}"
+        },
+        {
+            "description": "Trash icon in a menu item that closes on click: play on hover instead, so the animation is seen.",
+            "example": "{\"icon\":\"trash\",\"trigger\":\"hover\",\"hostSelector\":\".menu-item\"}"
+        }
+    ]
+}
