@@ -8,8 +8,8 @@ The icon plays **by itself** when the button around it is clicked or hovered: no
 
 ## Icons
 
-44 Lucide icons, named as in Lucide (`lucide/trash-2` and the old `trash` are accepted; `funnel` = `filter`).
-19 come from lucide-animated (`src/icons/ported.js`, same paths, variants and transitions); the 25 it
+46 Lucide icons, named as in Lucide (`lucide/trash-2` and the old `trash` are accepted; `funnel` = `filter`).
+21 come from lucide-animated (`src/icons/ported.js`, same paths, variants and transitions); the 25 it
 does not have are animated here in the same style (`src/icons/custom.js`).
 
 | Icon | Label in WeWeb | Animation | Source |
@@ -36,6 +36,8 @@ does not have are animated here in the same style (`src/icons/custom.js`).
 | `image` | Image | The sun rises and glows | designed here |
 | `images` | Images | The two pictures spread apart, then back | designed here |
 | `list-plus` | Add to list | The plus turns a quarter (spring) | designed here |
+| `lock` | Lock | The padlock wobbles and the shackle retracts a little | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `lock-open` | Unlock | The open padlock wobbles and the shackle closes up | [lucide-animated](https://github.com/pqoqubbw/icons) |
 | `mouse-pointer-2` | Pointer | The pointer presses toward its tip | designed here |
 | `panel-left` | Panel left | The divider nudges right | designed here |
 | `panel-left-close` | Panel left close | The arrow nudges left | [lucide-animated](https://github.com/pqoqubbw/icons) |

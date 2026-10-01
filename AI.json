@@ -48,6 +48,7 @@
                 "grid-2x2",
                 "image",
                 "images",
+                "lock",
                 "ellipsis",
                 "panel-left",
                 "panel-left-close",
@@ -70,6 +71,7 @@
                 "a-large-small",
                 "trash-2",
                 "archive-restore",
+                "lock-open",
                 "upload",
                 "x"
             ],

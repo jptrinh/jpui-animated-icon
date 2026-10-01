@@ -100,6 +100,38 @@ export default {
             rect(10, 3, 12, 18, 2),
         ],
     },
+    lock: {
+        label: 'Lock',
+        root: {
+            normal: { rotate: 0, scale: 1 },
+            animate: { rotate: [-3, 1, -2, 0], scale: [0.95, 1.05, 0.98, 1] },
+            transition: { duration: 1, ease: [0.4, 0, 0.2, 1] },
+        },
+        elements: [
+            rect(3, 11, 18, 11, 2),
+            path('M7 11V7a5 5 0 0 1 10 0v4', {
+                normal: { pathLength: 1 },
+                animate: { pathLength: 0.7 },
+                transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
+            }),
+        ],
+    },
+    'lock-open': {
+        label: 'Unlock',
+        root: {
+            normal: { rotate: 0, scale: 1 },
+            animate: { rotate: [2, 4, -2, 0], scale: [1.05, 0.95, 1.02, 1] },
+            transition: { duration: 1, ease: [0.4, 0, 0.2, 1] },
+        },
+        elements: [
+            rect(3, 11, 18, 11, 2),
+            path('M7 11V7a5 5 0 0 1 10 0v4', {
+                normal: { pathLength: 0.8 },
+                animate: { pathLength: 1 },
+                transition: { duration: 0.3, ease: [0.4, 0, 0.2, 1] },
+            }),
+        ],
+    },
     'panel-left-close': { label: 'Panel left close', ...panel(9, 'm16 15-3-3 3-3', -1.5) },
     'panel-left-open': { label: 'Panel left open', ...panel(9, 'm14 9 3 3-3 3', 1.5) },
     'panel-right-open': { label: 'Panel right open', ...panel(15, 'm10 15-3-3 3-3', -1.5) },
