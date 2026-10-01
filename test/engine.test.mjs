@@ -134,6 +134,7 @@ for (const [name, icon] of Object.entries(ICONS)) {
 assert.ok(ICONS[DEFAULT_ICON]);
 assert.equal(resolveIcon('lucide/trash-2'), 'trash-2');
 assert.equal(resolveIcon('trash'), 'trash-2');
+assert.equal(resolveIcon('funnel'), 'filter');
 assert.equal(resolveIcon('nope'), null);
 assert.equal(resolveIcon(undefined), null);
 assert.equal(ICON_OPTIONS.length, Object.keys(ICONS).length);

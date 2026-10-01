@@ -1,13 +1,15 @@
 // Icon registry. Keys are Lucide names, so a WeWeb icon `lucide/<name>` maps to `<name>`.
 // - ported.js: animations from lucide-animated, unchanged;
+// - custom.js: Lucide icons lucide-animated does not cover, animated here.
 // Adding an icon: an entry in one of those files (format in engine.js / shared.js), then the
 // value in AI.json's `icon` options (`npm test` checks they match).
 import ported from './ported.js';
+import custom from './custom.js';
 
-export const ICONS = { ...ported };
+export const ICONS = { ...ported, ...custom };
 
 // Old names still accepted (instances saved with them keep working).
-export const ALIASES = { trash: 'trash-2' };
+export const ALIASES = { trash: 'trash-2', funnel: 'filter' };
 
 export const DEFAULT_ICON = 'trash-2';
 
