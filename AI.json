@@ -18,7 +18,8 @@
             "Spring motion, retargetable mid-flight (hover out halfway, click again)",
             "Respects prefers-reduced-motion",
             "currentColor by default; size, color and stroke width in the style panel",
-            "Disabled host (disabled or aria-disabled) does not play"
+            "Disabled host (disabled or aria-disabled) does not play",
+            "Optional play on mount (`playOnMount`)"
         ]
     },
     "properties": [
@@ -98,6 +99,13 @@
         {
             "name": "active",
             "description": "State mode only: true = animated pose, false = rest.",
+            "type": "boolean",
+            "defaultValue": false,
+            "bindable": true
+        },
+        {
+            "name": "playOnMount",
+            "description": "Plays the animation once each time the element is mounted (page load, popup opening, conditional rendering, new repeat item), whatever `trigger` is; then back to rest (or to the Active pose in state mode). Not replayed when an element only hidden with display: none is shown again. Respects prefers-reduced-motion.",
             "type": "boolean",
             "defaultValue": false,
             "bindable": true

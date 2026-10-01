@@ -69,6 +69,7 @@ See them all: `npm run harness`, then http://localhost:4173/harness/ (hover or c
 | Play on | **Click on parent button** (default) · **Hover on parent button** · **State** (follows *Active*) · **Manual** (actions only) |
 | Host selector | Ancestor that plays the icon. Empty = nearest `button`, `a[href]`, `[role=button]`, `[role=menuitem]`, `[role=link]`, `[role=tab]`; if none, the parent element |
 | Active | State mode: `true` = animated state |
+| Play on mount | Plays once each time the element appears (mount: page load, popup, conditional rendering, new list item), whatever *Play on* is. Not on a `display: none` → shown toggle |
 | Speed | Multiplier, 1 = original timing |
 | Aria label | Empty = decorative (`aria-hidden`), the right choice inside a named button |
 | Size · Color · Stroke width | Style panel. Size defaults to `1em`, color to `currentColor` (the button's text color) |

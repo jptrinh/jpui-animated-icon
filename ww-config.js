@@ -14,7 +14,7 @@ export default {
     editor: {
         label: { en: 'Animated icon' },
         icon: 'sparkles',
-        customSettingsPropertiesOrder: ['icon', 'trigger', 'hostSelector', 'active', 'speed', 'ariaLabel'],
+        customSettingsPropertiesOrder: ['icon', 'trigger', 'hostSelector', 'active', 'playOnMount', 'speed', 'ariaLabel'],
         customStylePropertiesOrder: [
             {
                 label: 'Icon',
@@ -111,6 +111,23 @@ export default {
             bindingValidation: {
                 type: 'boolean',
                 tooltip: 'true = animated pose, false = rest. The icon moves between them on every change.',
+            },
+            /* wwEditor:end */
+        },
+        playOnMount: {
+            label: { en: 'Play on mount' },
+            type: 'OnOff',
+            section: 'settings',
+            defaultValue: false,
+            bindable: true,
+            /* wwEditor:start */
+            bindingValidation: {
+                type: 'boolean',
+                tooltip: 'true = the icon plays once each time it appears (page load, popup opening, conditional rendering, new list item).',
+            },
+            propertyHelp: {
+                tooltip:
+                    'Plays once when the element is mounted, whatever Play on is. An element only hidden with display: none is not remounted when shown again.',
             },
             /* wwEditor:end */
         },

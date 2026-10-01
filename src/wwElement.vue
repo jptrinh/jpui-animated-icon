@@ -324,6 +324,7 @@ export default {
             animator.snap();
             apply();
             bindHost();
+            if (props.content?.playOnMount === true) play(); // once, then back to rest / the Active pose
         });
 
         onUpdated(bindHost);
