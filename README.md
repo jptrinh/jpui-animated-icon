@@ -42,6 +42,9 @@ Listeners sit on the host itself (none in State / Manual), so a page full of ico
 nothing when nothing happens to their buttons. A disabled host (`disabled` / `aria-disabled="true"`) does not play; Enter / Space on the host
 play it, keyboard focus plays the hover animation; `prefers-reduced-motion` = no motion.
 
+Toggle buttons whose icon changes on click (panel open ↔ close): if the icon changes within
+700 ms of a click, or while the host is hovered, the new icon plays instead of starting at rest.
+
 ⚠️ A host that disappears on click (a menu item that closes its menu) hides the animation:
 use **Hover** there.
 

@@ -226,16 +226,28 @@ export default {
 
         // Listeners live on the host itself (not on the document): an event elsewhere in
         // the page costs nothing, whatever the number of icons. State / Manual: none.
+        // Toggle buttons swap their icon on the very click that plays it (open ↔ close):
+        // remember the interaction so the new icon plays instead of starting at rest.
+        const SWAP_WINDOW = 700; // ms between the click and the icon change
+        let lastClickAt = 0;
+        let hovering = false;
+
         function onClick() {
-            if (!isDisabled(boundHost)) play();
+            if (isDisabled(boundHost)) return;
+            lastClickAt = Date.now();
+            play();
         }
 
         function onPointerEnter(event) {
-            if (event.pointerType !== 'touch' && !isDisabled(boundHost)) start();
+            if (event.pointerType === 'touch') return;
+            hovering = true;
+            if (!isDisabled(boundHost)) start();
         }
 
         function onPointerLeave(event) {
-            if (event.pointerType !== 'touch') stop();
+            if (event.pointerType === 'touch') return;
+            hovering = false;
+            stop();
         }
 
         // Keyboard users get the hover animation on focus (focusin / focusout bubble from
@@ -248,11 +260,15 @@ export default {
             } catch (e) {
                 visible = true;
             }
-            if (visible && !isDisabled(boundHost)) start();
+            if (visible && !isDisabled(boundHost)) {
+                hovering = true;
+                start();
+            }
         }
 
         function onFocusOut(event) {
             if (event.relatedTarget && canContain(boundHost) && boundHost.contains(event.relatedTarget)) return;
+            hovering = false;
             stop();
         }
 
@@ -344,6 +360,8 @@ export default {
             animator.snap();
             nextTick(() => {
                 apply();
+                if (trigger.value === 'hover' && hovering) return start();
+                if (trigger.value === 'click' && Date.now() - lastClickAt < SWAP_WINDOW) return play();
                 /* wwEditor:start */
                 play(); // preview the new icon on the canvas
                 /* wwEditor:end */
