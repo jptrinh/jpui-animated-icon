@@ -34,6 +34,12 @@ export default {
             g([path('m9 15 3-3 3 3'), path('M12 12v9')], nudge('y', -2)),
         ],
     },
+    'arrow-right-left': {
+        elements: [
+            g([path('m16 3 4 4-4 4'), path('M20 7H4')], nudge('x', 2)),
+            g([path('m8 21-4-4 4-4'), path('M4 17h16')], nudge('x', -2)),
+        ],
+    },
     'circle-alert': {
         elements: [
             circle(12, 12, 10),

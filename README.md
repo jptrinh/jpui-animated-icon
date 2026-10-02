@@ -8,8 +8,8 @@ The icon plays **by itself** when the button around it is clicked or hovered: no
 
 ## Icons
 
-49 Lucide icons, named as in Lucide (`lucide/trash-2` and the old `trash` are accepted; `funnel` = `filter`).
-22 come from lucide-animated (`src/icons/ported.js`, same paths, variants and transitions); the 27 it
+50 Lucide icons, named as in Lucide (`lucide/trash-2` and the old `trash` are accepted; `funnel` = `filter`).
+22 come from lucide-animated (`src/icons/ported.js`, same paths, variants and transitions); the 28 it
 does not have are animated here in the same style (`src/icons/custom.js`).
 
 | Icon | Animation | Source |
@@ -19,6 +19,7 @@ does not have are animated here in the same style (`src/icons/custom.js`).
 | `archive-restore` | The lid lifts, the arrow bounces up | designed here |
 | `arrow-left` | The shaft shortens while the head pulls forward, then both return | [lucide-animated](https://github.com/pqoqubbw/icons) |
 | `arrow-right` | The shaft shortens while the head pulls back, then both return | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `arrow-right-left` | The two arrows slide past each other, then back | designed here |
 | `check` | The check draws itself while growing in | [lucide-animated](https://github.com/pqoqubbw/icons) |
 | `chevron-up` | The chevron bounces up | [lucide-animated](https://github.com/pqoqubbw/icons) |
 | `circle-alert` | The exclamation mark wobbles on its dot | designed here |
