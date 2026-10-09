@@ -8,8 +8,8 @@ The icon plays **by itself** when the button around it is clicked or hovered: no
 
 ## Icons
 
-50 Lucide icons, named as in Lucide (`lucide/trash-2` and the old `trash` are accepted; `funnel` = `filter`).
-22 come from lucide-animated (`src/icons/ported.js`, same paths, variants and transitions); the 28 it
+51 Lucide icons, named as in Lucide (`lucide/trash-2` and the old `trash` are accepted; `funnel` = `filter`).
+22 come from lucide-animated (`src/icons/ported.js`, same paths, variants and transitions); the 29 it
 does not have are animated here in the same style (`src/icons/custom.js`).
 
 | Icon | Animation | Source |
@@ -33,6 +33,7 @@ does not have are animated here in the same style (`src/icons/custom.js`).
 | `filter` | The funnel squeezes and springs back | designed here |
 | `folder` | The folder hops | designed here |
 | `folder-input` | The arrow pushes into the folder | [lucide-animated](https://github.com/pqoqubbw/icons) |
+| `fullscreen` | The corners spread out while the screen grows, then both return | designed here |
 | `gallery-horizontal-end` | The stacked edges slide in one after the other | [lucide-animated](https://github.com/pqoqubbw/icons) |
 | `grid-2x2` | The inner cross turns a quarter (spring) | designed here |
 | `image` | The sun rises and glows | designed here |

@@ -84,6 +84,15 @@ export default {
             ),
         ],
     },
+    fullscreen: {
+        elements: [
+            path('M3 7V5a2 2 0 0 1 2-2h2', shift(-1.5, -1.5)),
+            path('M17 3h2a2 2 0 0 1 2 2v2', shift(1.5, -1.5)),
+            path('M21 17v2a2 2 0 0 1-2 2h-2', shift(1.5, 1.5)),
+            path('M7 21H5a2 2 0 0 1-2-2v-2', shift(-1.5, 1.5)),
+            rect(7, 8, 10, 8, 1, pulse(1.15)),
+        ],
+    },
     'grid-2x2': {
         elements: [
             g([path('M12 3v18'), path('M3 12h18')], {
